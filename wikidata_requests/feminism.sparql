@@ -1,0 +1,15 @@
+SELECT DISTINCT ?auteur ?auteurLabel ?dateNaissance ?dateDeces ?description
+WHERE {
+  ?auteur wdt:P101 wd:Q7252 .  # domaine d'activité : féminisme
+  
+  ?auteur wdt:P31 wd:Q5 .
+  
+  OPTIONAL { ?auteur wdt:P569 ?dateNaissance . }
+  OPTIONAL { ?auteur wdt:P570 ?dateDeces . }
+  
+  OPTIONAL { ?auteur schema:description ?description . FILTER(LANG(?description) = "fr") }
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "fr,en" . }
+}
+ORDER BY ?auteurLabel
+LIMIT 100
