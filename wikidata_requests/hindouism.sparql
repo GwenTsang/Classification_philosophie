@@ -1,0 +1,36 @@
+SELECT DISTINCT ?auteur ?auteurLabel ?description WHERE {
+  # L'auteur doit être une personne
+  ?auteur wdt:P31 wd:Q5 .
+  
+  ?auteur wdt:P106 ?occupation .
+  VALUES ?occupation { 
+    wd:Q36180    # écrivain
+    wd:Q482980   # auteur
+    wd:Q49757    # poète
+    wd:Q6625963  # romancier
+  } .
+  
+  {
+    # Religion : hindouisme
+    ?auteur wdt:P140 wd:Q9089 .
+  } UNION {
+    # Sujet principal : hindouisme
+    ?auteur wdt:P921 wd:Q9089 .
+  } UNION {
+    # Mouvement : lié à l'hindouisme
+    ?auteur wdt:P135 ?mouvement .
+    ?mouvement wdt:P361* wd:Q9089 .
+  } UNION {
+    # A écrit sur l'hindouisme
+    ?oeuvre wdt:P50 ?auteur .
+    ?oeuvre wdt:P921 wd:Q9089 .
+  }
+  
+  # Récupérer les labels et descriptions
+  SERVICE wikibase:label { 
+    bd:serviceParam wikibase:language "[AUTO_LANGUAGE],fr,en" .
+    ?auteur rdfs:label ?auteurLabel .
+    ?auteur schema:description ?description .
+  }
+}
+LIMIT 100
