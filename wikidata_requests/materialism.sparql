@@ -1,0 +1,18 @@
+SELECT DISTINCT ?author ?authorLabel ?dateOfBirth WHERE {
+  VALUES ?tag { wd:Q7081 }
+  ?author wdt:P31 wd:Q5 .
+  ?author wdt:P569 ?dateOfBirth .
+  FILTER(?dateOfBirth < "1890-01-01T00:00:00Z"^^xsd:dateTime)
+  
+  {
+    ?author wdt:P106 ?tag .
+  }
+  UNION
+  {
+    ?author ?p ?tag .
+    FILTER(STRSTARTS(STR(?p),"http://www.wikidata.org/prop/"))
+  }
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}
+ORDER BY ?authorLabel
