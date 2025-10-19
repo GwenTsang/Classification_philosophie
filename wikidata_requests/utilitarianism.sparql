@@ -1,0 +1,13 @@
+SELECT DISTINCT ?auteur ?auteurLabel ?dateNaissance ?dateDeces ?description WHERE {
+  # Utilitarisme (Q160590)
+  ?auteur wdt:P135 wd:Q160590 .  # mouvement = utilitarisme
+  
+  # Informations optionnelles
+  OPTIONAL { ?auteur wdt:P569 ?dateNaissance . }e
+  OPTIONAL { ?auteur wdt:P570 ?dateDeces . }
+  OPTIONAL { ?auteur schema:description ?description . FILTER(LANG(?description) = "fr") }
+  
+  # Récupère les labels en français
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "fr,en" . }
+}
+ORDER BY ?dateNaissance
