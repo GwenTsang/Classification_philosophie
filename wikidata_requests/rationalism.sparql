@@ -1,0 +1,17 @@
+SELECT DISTINCT ?auteur ?auteurLabel ?dateNaissance ?dateDeces ?description
+WHERE {
+  ?auteur wdt:P135 wd:Q483024 .  # mouvement = rationalisme
+  
+  # Optionnel : récupérer les dates de naissance et décès
+  OPTIONAL { ?auteur wdt:P569 ?dateNaissance . }
+  OPTIONAL { ?auteur wdt:P570 ?dateDeces . }
+  
+  # Service pour obtenir les labels en français
+  SERVICE wikibase:label { 
+    bd:serviceParam wikibase:language "fr,en" .
+    ?auteur rdfs:label ?auteurLabel .
+    ?auteur schema:description ?description .
+  }
+}
+ORDER BY ?auteurLabel
+LIMIT 100
