@@ -3,7 +3,7 @@ SELECT DISTINCT ?auteur ?auteurLabel ?dateNaissance ?dateDeces ?description WHER
   ?auteur wdt:P135 wd:Q160590 .  # mouvement = utilitarisme
   
   # Informations optionnelles
-  OPTIONAL { ?auteur wdt:P569 ?dateNaissance . }e
+  OPTIONAL { ?auteur wdt:P569 ?dateNaissance . }
   OPTIONAL { ?auteur wdt:P570 ?dateDeces . }
   OPTIONAL { ?auteur schema:description ?description . FILTER(LANG(?description) = "fr") }
   
