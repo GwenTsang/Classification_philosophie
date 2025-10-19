@@ -1,0 +1,31 @@
+SELECT DISTINCT ?auteur ?auteurLabel ?dateNaissance ?dateMort ?description WHERE {
+  {
+    # Auteurs dont le mouvement est le taoïsme
+    ?auteur wdt:P135 wd:Q9598 .
+  } UNION {
+    # Auteurs dont la religion est le taoïsme
+    ?auteur wdt:P140 wd:Q9598 .
+  } UNION {
+    # Auteurs qui ont pour sujet principal le taoïsme
+    ?auteur wdt:P921 wd:Q9598 .
+  } UNION {
+    # Œuvres sur le taoïsme et leurs auteurs
+    ?oeuvre wdt:P921 wd:Q9598 .
+    ?oeuvre wdt:P50 ?auteur .
+  }
+  
+  # L'auteur doit être une personne humaine
+  ?auteur wdt:P31 wd:Q5 .
+  
+  # Récupération des dates
+  OPTIONAL { ?auteur wdt:P569 ?dateNaissance . }
+  OPTIONAL { ?auteur wdt:P570 ?dateMort . }
+  
+  # Récupération de la description
+  OPTIONAL { ?auteur schema:description ?description . FILTER(LANG(?description) = "fr") }
+  
+  # Récupération des labels en français
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "fr,en" . }
+}
+ORDER BY ?auteurLabel
+LIMIT 100
