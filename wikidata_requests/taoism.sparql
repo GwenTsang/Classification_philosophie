@@ -3,7 +3,6 @@ SELECT DISTINCT ?auteur ?auteurLabel ?dateNaissance ?dateMort ?description WHERE
     # Auteurs dont le mouvement est le taoïsme
     ?auteur wdt:P135 wd:Q9598 .
   } UNION {
-    # Auteurs dont la religion est le taoïsme
     ?auteur wdt:P140 wd:Q9598 .
   } UNION {
     # Auteurs qui ont pour sujet principal le taoïsme
