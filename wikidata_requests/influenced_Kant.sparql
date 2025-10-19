@@ -1,0 +1,14 @@
+SELECT ?author ?authorLabel ?prop ?propLabel WHERE {
+  VALUES ?kant { wd:Q9312 } .                # Immanuel Kant
+
+  ?kant ?p ?author .
+  ?author wdt:P31 wd:Q5 .                    # author = humain
+  ?author wdt:P106/wdt:P279* wd:Q4964182 .   # occupation = philosophe (ou sous-classes)
+
+  FILTER(?p IN (wdt:P737, wdt:P2860)) .      # P737 = influenced by, P2860 = cites
+
+  BIND(?p AS ?prop)
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "fr,en". }
+}
+ORDER BY ?authorLabel
