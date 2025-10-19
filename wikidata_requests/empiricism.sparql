@@ -1,0 +1,18 @@
+SELECT DISTINCT ?auteur ?auteurLabel ?dateNaissance ?dateDeces ?description
+WHERE {
+  # Chercher les personnes associées au mouvement empirisme (Q83368)
+  ?auteur wdt:P135 wd:Q83368 .
+  
+  # Optionnel : récupérer les dates de naissance et décès
+  OPTIONAL { ?auteur wdt:P569 ?dateNaissance . }
+  OPTIONAL { ?auteur wdt:P570 ?dateDeces . }
+  
+  # Récupérer les labels et descriptions en français
+  SERVICE wikibase:label { 
+    bd:serviceParam wikibase:language "[AUTO_LANGUAGE],fr,en" .
+    ?auteur rdfs:label ?auteurLabel .
+    ?auteur schema:description ?description .
+  }
+}
+ORDER BY ?dateNaissance
+LIMIT 100
