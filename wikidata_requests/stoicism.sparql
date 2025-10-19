@@ -1,0 +1,21 @@
+SELECT DISTINCT ?auteur ?auteurLabel ?dateNaissance ?dateDeces ?description
+WHERE {
+  {
+    ?auteur wdt:P135 wd:Q48235 .
+  } UNION {
+    ?auteur wdt:P101 wd:Q48235 .
+  } UNION {
+    ?oeuvre wdt:P921 wd:Q48235 ;
+            wdt:P50 ?auteur .
+  } UNION {
+    wd:Q48235 wdt:P3320 ?auteur .
+  }
+  
+  ?auteur wdt:P31 wd:Q5 .
+  
+  SERVICE wikibase:label { 
+    bd:serviceParam wikibase:language "fr,en" . 
+  }
+}
+ORDER BY ?auteurLabel
+LIMIT 100
